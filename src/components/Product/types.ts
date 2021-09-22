@@ -1,5 +1,10 @@
-export interface productProps {
-  _id: number
-  name: string
-  image: string
+export interface ObjectProps {
+  product:{
+    _id: string
+    name: string
+    image: string
+    rating: number
+    numReviews: number
+    price: number
+  }
 }

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Card } from 'react-bootstrap'
-// import { productProps } from './types'
+import { ObjectProps } from './types'
 
-const Product = ({ product }:any) => {
+const Product = ({ product }:ObjectProps) => {
   return (
     <Card className='my-3 p-3 rounded'>
       <a href={`/product/${product._id}`}>
