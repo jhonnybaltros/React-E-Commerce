@@ -4,18 +4,17 @@ import { Col, Row } from 'react-bootstrap';
 import Product from '../components/Product';
 
 const HomeScreen = () => {
+  const [product, setProducts] = useState([]);
 
-  const [product, setProducts] = useState([])
-
-  useEffect(() =>{
+  useEffect(() => {
     const fetchProducts = async () => {
-      const { data } = await axios.get('/api/products')
+      const { data } = await axios.get('/api/products');
 
-      setProducts(data)
-    }
+      setProducts(data);
+    };
 
-    fetchProducts()
-  }, [])
+    fetchProducts();
+  }, []);
 
   return (
     <>
@@ -28,6 +27,6 @@ const HomeScreen = () => {
           ))}
       </Row>
     </>
-  )
-}  
+  );
+};
 export default HomeScreen;

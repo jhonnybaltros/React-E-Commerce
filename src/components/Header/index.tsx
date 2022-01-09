@@ -1,8 +1,9 @@
-import { LinkContainer } from 'react-router-bootstrap'
-import { Navbar, Container, Nav } from 'react-bootstrap'
+import React from 'react';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Navbar, Container, Nav } from 'react-bootstrap';
 
 const Header = () => {
-    return (
+  return (
         <header>
             <Navbar bg="light" expand="lg" collapseOnSelect>
                 <Container>
@@ -12,18 +13,18 @@ const Header = () => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
                     <Nav className="mr-auto">
-                    <LinkContainer to='/cart'>    
+                    <LinkContainer to='/cart'>
                         <Nav.Link><i className='fas fa-shopping-cart'></i>Cart</Nav.Link>
                     </LinkContainer>
-                    <LinkContainer to='/login'>    
+                    <LinkContainer to='/login'>
                         <Nav.Link><i className='fas fa-user'></i>Sing In</Nav.Link>
                     </LinkContainer>
                     </Nav>
                     </Navbar.Collapse>
-                </Container>    
+                </Container>
                 </Navbar>
         </header>
-    )
-}
+  );
+};
 
-export default Header
+export default Header;
