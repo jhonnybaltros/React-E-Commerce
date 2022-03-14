@@ -14,6 +14,7 @@
   },
   "plugins": ["react", "@typescript-eslint", "prettier"],
   "rules": {
+    "multiline-ternary": "off",
     "semi": "off",
     "@typescript-eslint/semi": "warn",
     "no-use-before-define": "off",
