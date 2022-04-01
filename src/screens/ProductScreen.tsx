@@ -14,9 +14,10 @@ import Rating from '../components/Rating';
 import { listProductDetails } from '../actions/productActions';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
+import { addToCart } from '../actions/cartActions';
 
 const ProductScreen = ({ history, match }: any) => {
-  const [quantity, setQuantity] = useState<Number>(0);
+  const [quantity, setQuantity] = useState<number>(1);
 
   const dispatch = useDispatch();
 
@@ -28,7 +29,8 @@ const ProductScreen = ({ history, match }: any) => {
   }, [dispatch, match]);
 
   const addToCartHandler = () => {
-    history.push(`/cart/${match.params.id}?quantity=${quantity}`);
+    dispatch(addToCart(match.params.id, quantity));
+    history.push(`/cart/${match.params.id}?qty=${quantity}`);
   };
 
   return (
@@ -37,7 +39,7 @@ const ProductScreen = ({ history, match }: any) => {
         Go Back
       </Link>
       {loading ? (
-        <Loader />
+        <Loader animation="border" />
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
@@ -103,7 +105,7 @@ const ProductScreen = ({ history, match }: any) => {
 
                 <ListGroup.Item>
                   <Button
-                    onClick={() => addToCartHandler()}
+                    onClick={addToCartHandler}
                     className="btn-block"
                     type="button"
                     disabled={product.countInStock === 0}

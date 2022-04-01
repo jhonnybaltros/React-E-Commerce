@@ -6,10 +6,34 @@ import Loader from '../components/Loader';
 import { listProducts } from '../actions/productActions';
 import Message from '../components/Message';
 
+interface ProductPayload {
+  _id: string;
+  user: string;
+  name: string;
+  image: string;
+  brand: string;
+  category: string;
+  rating: number;
+  numReviews: number;
+  price: number;
+  countInStock: number;
+  __v: number;
+  createdAt: string;
+  updatedAt: string;
+}
+interface IProductList {
+  loading: boolean;
+  productList: ProductPayload;
+  products: ProductPayload[];
+  error?: Error;
+}
+
 const HomeScreen = () => {
   const dispatch = useDispatch();
 
-  const productlist: any = useSelector<any>((state) => state.productList);
+  const productlist: IProductList = useSelector(
+    (state: any) => state.productList
+  );
 
   const { loading, error, products } = productlist;
 
@@ -21,12 +45,12 @@ const HomeScreen = () => {
     <>
       <h1>latest products</h1>
       {loading ? (
-        <Loader />
+        <Loader animation="border" />
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
         <Row>
-          {products.map((product: any) => (
+          {products.map((product: ProductPayload) => (
             <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
               <Product product={product} />
             </Col>

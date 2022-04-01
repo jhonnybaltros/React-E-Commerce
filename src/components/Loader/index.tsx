@@ -1,7 +1,8 @@
 import React from 'react';
-import { Spinner } from 'react-bootstrap';
+import { Spinner, SpinnerProps } from 'react-bootstrap';
+import { BsPrefixRefForwardingComponent } from 'react-bootstrap/esm/helpers';
 
-const Loader = () => {
+const Loader: BsPrefixRefForwardingComponent<'div', SpinnerProps> = () => {
   return (
     <Spinner
       animation="border"
