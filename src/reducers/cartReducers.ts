@@ -1,18 +1,14 @@
-import { AnyAction } from 'redux';
 import { CART_ADD_ITEM } from '../constants/cartConstants';
 
-export const cartReducer = (
-  state: any = { cartItems: [] },
-  action: AnyAction
-) => {
-  const item = action.payload;
-
-  const existItem = state.cartItems.find(
-    (x: any) => x.product === item.product || []
-  );
-
+export const cartReducer = (state: any = { cartItems: [] }, action: any) => {
   switch (action.type) {
-    case CART_ADD_ITEM:
+    case CART_ADD_ITEM: {
+      const item = action.payload;
+
+      const existItem = state.cartItems.find(
+        (x: any) => x.product === item.product
+      );
+
       if (existItem) {
         return {
           ...state,
@@ -26,6 +22,7 @@ export const cartReducer = (
           cartItems: [...state.cartItems, item]
         };
       }
+    }
     default:
       return state;
   }
