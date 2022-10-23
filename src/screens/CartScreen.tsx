@@ -1,24 +1,55 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, ListGroup, Image, Form, Button } from 'react-bootstrap';
+import {
+  Row,
+  Col,
+  ListGroup,
+  Image,
+  Form,
+  Button,
+  Card
+} from 'react-bootstrap';
 import Message from '../components/Message';
-import { addToCart } from '../actions/cartActions';
+import { addToCart, removeFromCart } from '../actions/cartActions';
+
+interface IMatch {
+  path: string;
+  url: string;
+  isExact: boolean;
+  params: {
+    id: string;
+  };
+}
 
 interface ICartscreen extends React.FC {
-  match: any;
-  location: any;
-  history: any;
+  match: IMatch;
+  location: Location;
+  history: History;
+}
+
+interface ICartItem {
+  product: String;
+  name: String;
+  image: String;
+  countInStock: number;
+  price: number;
+  quantity: number;
+}
+
+interface ICart {
+  cartItems: ICartItem[];
 }
 
 const CartScreen = ({ match, location, history }: ICartscreen) => {
-  const productId = match.params.id;
+  const productId = Number(match.params.id);
 
   const quantity = location.search ? Number(location.search.split('=')[1]) : 1;
 
   const dispatch = useDispatch();
 
-  const cart: any = useSelector((state: any) => state.cart);
+  const cart: ICart = useSelector((state: any) => state.cart);
+  console.log(cart);
   const { cartItems } = cart;
 
   useEffect(() => {
@@ -29,14 +60,14 @@ const CartScreen = ({ match, location, history }: ICartscreen) => {
   }, [dispatch, productId, quantity]);
 
   const removeFromCartHandler = (id: number) => {
-    console.log('remove');
+    dispatch(removeFromCart(id));
+  };
+
+  const checkoutHandler = (cart: ICart) => {
+    console.log(cart);
   };
   return (
     <Row>
-      <Link className="btn btn-dark my-3" to="/">
-        Go Back
-      </Link>
-      ;
       <Col md={8}>
         <h1>Shopping Cart</h1>
         {cartItems.length === 0 ? (
@@ -87,7 +118,41 @@ const CartScreen = ({ match, location, history }: ICartscreen) => {
           </ListGroup>
         )}
       </Col>
-      <Col md={4}></Col>
+      <Col md={4}>
+        <Card>
+          <ListGroup variant="flush">
+            <ListGroup.Item>
+              <h2>
+                Subtotal: (
+                {cartItems.reduce(
+                  (accumulator: number, item: ICartItem) =>
+                    accumulator + item.quantity,
+                  0
+                )}
+                ) Items
+              </h2>
+              $
+              {cartItems
+                .reduce(
+                  (accumulator: number, item: ICartItem) =>
+                    accumulator + item.quantity * item.price,
+                  0
+                )
+                .toFixed(2)}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Button
+                type="button"
+                className="btn-block"
+                disabled={cartItems.length === 0}
+                onClick={() => checkoutHandler}
+              >
+                Checkout
+              </Button>
+            </ListGroup.Item>
+          </ListGroup>
+        </Card>
+      </Col>
     </Row>
   );
 };
